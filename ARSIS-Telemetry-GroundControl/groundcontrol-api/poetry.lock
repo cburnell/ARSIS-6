@@ -80,6 +80,14 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "lorem"
+version = "0.1.1"
+description = "Generator for random text that looks like Latin."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pydantic"
 version = "1.10.4"
 description = "Data validation and settings management using python type hints"
@@ -219,7 +227,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "3fced08e41f349f1f41bd52657cca17d0930ebf57626875d49f59e19ac31ac8b"
+content-hash = "c531e9399a5c179f6211441bbd868604aaf8efcfb6586e24fe47224468377650"
 
 [metadata.files]
 anyio = [
@@ -288,6 +296,10 @@ httptools = [
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
+]
+lorem = [
+    {file = "lorem-0.1.1-py3-none-any.whl", hash = "sha256:c9c2914b5a772022417c398bd74b7bbd712e73ff029ba82720855e458f13ae42"},
+    {file = "lorem-0.1.1.tar.gz", hash = "sha256:785f4109a241fc2891e59705e85d065f6e6d3ed6ad91750a8cb54d4f3e59d934"},
 ]
 pydantic = [
     {file = "pydantic-1.10.4-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:b5635de53e6686fe7a44b5cf25fcc419a0d5e5c1a1efe73d49d48fe7586db854"},

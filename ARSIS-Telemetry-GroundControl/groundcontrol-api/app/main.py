@@ -1,25 +1,27 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import random
+from .mockprocedure import MockProcedure
 
 app = FastAPI()
+mock_procedure = MockProcedure()
+
+procedures = {mock_procedure.get_name(): mock_procedure.get_task_list()}
+
 
 @app.get("/")
 async def root():
     return {"message": "Ground Control API"}
 
 
-@app.get("/fake-procedure")
-def fake_procedure():
-    return {"name": "procedure 1", "number_of_tasks": 5}
-
-
-@app.get("/fake-task")
-def fake_task():
-    to_return = []
-    for i in range(random.randint(1, 7)):
-        to_return.append(["text", "space " * random.randint(6, 15)])
-    return {"task_items": to_return}
+@app.get("/procedure/{name}")
+def procedure(name: str):
+    res = procedures.get(name, None)
+    if res is not None:
+        return {
+            "name": name,
+            "tasks": res,
+        }
+    return {"name": "Not found", "tasks": []}
 
 
 class LoggingRequest(BaseModel):
