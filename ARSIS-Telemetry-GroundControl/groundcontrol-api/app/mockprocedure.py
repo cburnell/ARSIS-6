@@ -2,15 +2,15 @@ class MockProcedure:
     def __init__(self):
         self.name = "Mock Procedure"
         self.task_list = [
-            ["text", "asdfasdf asdfasdf asdf sadf asdf asdf"],
+            ["text", "asdfasdf asdfasdf asdf sadf asdf asdf".encode()],
             [
                 "text",
-                "lkashdflkasdfdffdfdfkasjfdaadsfsfasdfasdfasdfasoiueoriuwoeirtn,msnd,gmnsdf,gns,dnfgm,sdnf,msndjfksiuoqweuioqweuioxcbncxvbncxvbnxcvbnaghfasdfgsadwqyetwty32463278sdgusd",
+                "lkashdflkasdfdffdfdfkasjfdaadsfsfasdfasdfasdfasoiueoriuwoeirtn,msnd,gmnsdf,gns,dnfgm,sdnf,msndjfksiuoqweuioqweuioxcbncxvbncxvbnxcvbnaghfasdfgsadwqyetwty32463278sdgusd".encode(),
             ],
-            ["text", "asdf"],
+            ["text", "asdf".encode()],
             [
                 "text",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".encode(),
             ],
         ]
 

@@ -8,7 +8,6 @@ namespace EventSystem {
         public readonly List<List<string>> taskList;
 
         public ProcedureEvent(string procedureName, List<List<string>> taskList){
-            Debug.Log("in PE " + procedureName);
             this.taskList = taskList;
             this.procedureName = procedureName;
         }
