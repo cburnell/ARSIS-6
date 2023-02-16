@@ -18,10 +18,10 @@ def procedure(name: str):
     res = procedures.get(name, None)
     if res is not None:
         return {
-            "name": name,
-            "tasks": res,
+            "procedureName": name,
+            "taskList": res,
         }
-    return {"name": "Not found", "tasks": []}
+    return {"procedureName": "Not found", "taskList": []}
 
 
 class LoggingRequest(BaseModel):
