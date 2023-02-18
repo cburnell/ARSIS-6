@@ -3,7 +3,7 @@
 - [Event System Lab](#event-system-lab)
 - [Summary](#summary)
 - [Setup](#setup)
-- [Part 1: Creating A Basic Interface](#part-1-creating-a-basic-interface)
+- [Part 1: Creating A Basic System](#part-1-creating-a-basic-system)
   - [UI](#ui)
   - [Creating The Event](#creating-the-event)
   - [Listening For The Event](#listening-for-the-event)
@@ -31,13 +31,14 @@ If you are not sure, there should be the following files in the `Assets/Labs/Eve
 - IntStore.cs
 ```
 
-# Part 1: Creating A Basic Interface
+# Part 1: Creating A Basic System
 ## UI
-Before we set up the backend events, lets create a simple UI to display the outputs so we can see them in action.
-1. Create a new empty scene for this lab and open it. We can do this by selecting `File > New Scene` from the Unity Editor menu
-2. We will need to add a text display and a button to the scene. 
-   - To create the text and basic canvas add a Text gameobject to the scene `GameObject > UI > Text` 
-   - To create the button right click the Canvas in he hirarchy and add a Button gameobject `UI > Button`
+Before we start setting up the backend events, let's create a simple user interface (UI) to display the 
+outputs so we can see them in action.
+1. Create a new empty scene for this lab by selecting File > New Scene from the Unity Editor menu.
+2. Add a text display and a button to the scene by following these steps. 
+   - To create the text, add a Text gameobject to the scene by selecting `GameObject > UI > Text` from the unity editor menu.
+   - To create the button, right click the Canvas object in the hirarchy window select `UI > Button`
      - You can change the text on the button by changing the text on the child Text gameobject
 
 Now the scene should look like this:
@@ -47,10 +48,15 @@ Now the scene should look like this:
 *Note: The new input system may cause errors when the scene is run. If that happens select the event system and click the `Replace with InputSystemUIInputModule` button.*
 
 ## Creating The Event
-Now that we have a UI to display the output, lets create the event that will increment the counter.
-To create a new event type, we need to create a new class that inherits from `BaseArsisEvent`.
-1. Create a new C# script in the `Assets/ARSIS/Core/EventManager/EventTypes` folder called `CounterValue.cs` and open it in your editor. Events are stored in the `EventTypes` folder regardless of the type of event or what system uses it.
-2. We will need to import the `EventSystem` namespace to use the `BaseArsisEvent` class. Then we will need to define a class with the properties that we want. In this case, the minimal event would be
+Now that we have a UI to display the output, lets create the event that will increment the counter when the button is pressed.
+To create a new event type, we need to create a new class that inherits from `BaseArsisEvent`. Follow these steps
+to create the new event sctipt.
+1. In the Unity Editor, navigate to the Assets/ARSIS/Core/EventManager/EventTypes folder.
+2. Right-click on the folder and select `Create > C# Script` from the context menu. Name the script CounterValue.cs and open it in your code editor.
+3. Import the `EventSystem` namespace to use the `BaseArsisEvent` class.
+4. Define a class with the properties we want that inherits from `BaseArsisEvent`. 
+
+In this case we might write:
 ```csharp
 using EventSystem;
 
@@ -58,7 +64,14 @@ public class CounterValue : BaseArsisEvent {
     public int value;
 }
 ```
-Although this is perfesctly valid, we can add some quality of life features to make it easier to use. Events are wrappers around data. They can have any type of property, private or public, and can have any number of them. Event types are checked at compile time, so every event listener will know what properties are available and what type they are and can use them without having to check for null *(**unless the event data values are nullable**)* or type errors.
+Here, CounterValue is the name of our event and it has a single public property called value that stores an integer. Events are named after the values they contain because it helps to maintain readability and consistency.
+
+We can also add some quality of life features to our event to make it easier to use. In this case:
+ - A constructor that sets the `value` peoperty.
+ - An implicit conversion operator that allows us to use a `CounterValue` as an int.
+ - A `ToString` method that lets us easily display the value of the event.
+  
+The updated class might look like this:
 ```csharp
 using EventSystem;
 
@@ -69,7 +82,6 @@ public class CounterValue : BaseArsisEvent {
         this.value = value;
     }
 
-    // This allows us to use the CounterValue class as an int
     public static implicit operator int(CounterValue e) {
         return e.value;
     }
@@ -79,7 +91,7 @@ public class CounterValue : BaseArsisEvent {
     }
 }
 ```
-Now we have a basic event that can be used to set the counter value. We need to create the script that will listen for the event and update the UI and the script that will send the event when the button is pressed.
+Now we have a basic event that can be used to set the counter value. Next, we need to create the scripts that will listen for the event and update the UI, and the script that will send the event when the button is pressed.
 
 ## Listening For The Event
 1. Create a new MonoBeheiviour and open it in your editor.
@@ -106,9 +118,14 @@ void OnDisable()
 5. Add the script to the Text GameObject in the scene and set the `counterText` variable to the Text component.
 
 ## Sending The Event
-1. Create a new MonoBeheiviour and open it in your editor.
-2. import the `EventSystem` namespace.
-3. add a event listener to the button's `onClick` event that increments the value of an int and sends the new value in a `CounterValue` event. That method might look like this:
+Now that we've created the event, we need to create a script that listens for the event and updates the UI.
+
+1. Create a new script
+2. Open the script in your editor.
+3. Import the `EventSystem` and `UnityEngine.UI` namespaces.
+4. Add a event listener to the button's `onClick` event that increments the value of an int and sends the new value in a `CounterValue` event. 
+
+The complete script might look like this:
 ```csharp
 using UnityEngine;
 using EventSystem;
@@ -122,15 +139,20 @@ public class CounterUpdater : MonoBehaviour {
     }
 }
 ```
-4. Add the script to the Button GameObject in the scene and set the `button` variable to the Button component.
+
+Lastly, add the script to the button GameObject in the scene and set the `button` variable to the Button component.
 
 ## Testing The Event
-Now that we have created the event and the scripts to listen for and send it, we can test it out.
-When the scene is runnnig, the counter should increment when the button is pressed and the UI should update to display the new value.
-Although this seems like a lot of complexity for incrementing the value in a text field, we can now also add additional buttons and displays *(`Ctrl+D` to duplicate)* and the event will still work as expected without manualy referencing the other objects, using `Find` or `GetComponent` to get a reference to them, or having to write additional code (managers) to update the other objects.
+Now we can try out the event that we've just created and see if it works as expected. Here's how to test it:
+
+- Make sure that the scene is running by clicking the Play button in the Unity Editor.
+- Press the button that we added to the UI. You should see the number on the screen increase by one each time you press the button.
+- Congratulations, you've successfully tested the event!
+
+Although this might seem like a lot of work just to increment a number in a text field, it's worth it because we can now easily add more buttons and displays without having to write additional code to update them and we can easily expand on the system by adding features like a Cache.
 
 # Part 2: Adding A Cache
-Because we are using events, we can easily add a cache to make the counter value persist between restarts. We just need to add a script that listens for the `CounterValue` event and stores the value in a cache. Then the same script can emit a `CounterValue` event when the scene is loaded to set the counter to the cached value. This code might look like this:
+By using events, we can easily add a cache to persist the counter value between restarts. To achieve this, we need to add a script that listens for the CounterValue event and stores the value in a cache. Then, the same script can emit a CounterValue event when the scene is loaded to set the counter to the cached value. The code for this might look like:
 ```csharp
 using EventSystem;
 using UnityEngine;
@@ -145,7 +167,7 @@ public class CounterCache : MonoBehaviour {
     }
 }
 ```
-With that code added, we will need to update the `CounterUpdater` script to allow the initilization of the counter value to be set from the cache. We can do this by adding an event listener for the `CounterValue` event in the `Awake` method. The updated code might look like this:
+Once we have added this script, we need to update the CounterUpdater script to allow initialization of the counter value from the cache. We can do this by adding an event listener for the CounterValue event in the Awake method. The updated code might look like:
 ```csharp
 using UnityEngine;
 using EventSystem;
@@ -168,7 +190,7 @@ public class CounterUpdater : MonoBehaviour {
 }
 ```
 
-Now when the scene is run, the counter increments and retains its value between restarts. You can clear the value of the cache by the `DemoCache/Clear` menu item in the Unity Editor.
+Now, when the scene is run, the counter increments and retains its value between restarts. If you want to clear the cache, you can use the `DemoCache/Clear` menu item in the Unity Editor.
 
 # Conclusion
-
+I hope this lab demonstrates how to use events to manage the flow of data between different parts of a Unity project. By decoupling the components and using events, we can avoid tightly coupled code that's difficult to modify and maintain. The event system provides an efficient and flexible way to manage communication between objects, which is especially useful when building complex systems. In this lab, we have built a simple counter system that illustrates how data is passed between different parts of ARSIS.
