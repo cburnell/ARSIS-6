@@ -52,7 +52,7 @@ Now that we have a UI to display the output, lets create the event that will inc
 To create a new event type, we need to create a new class that inherits from `BaseArsisEvent`. Follow these steps
 to create the new event sctipt.
 1. In the Unity Editor, navigate to the Assets/ARSIS/Core/EventManager/EventTypes folder.
-2. Right-click on the folder and select `Create > C# Script` from the context menu. Name the script CounterValue.cs and open it in your code editor.
+2. Right-click on the folder and select `Create > C# Script` from the context menu. Name the script `CounterValue.cs` and open it in your code editor.
 3. Import the `EventSystem` namespace to use the `BaseArsisEvent` class.
 4. Define a class with the properties we want that inherits from `BaseArsisEvent`. 
 
