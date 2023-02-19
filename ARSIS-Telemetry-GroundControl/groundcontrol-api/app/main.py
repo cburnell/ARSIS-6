@@ -5,7 +5,7 @@ from .mockprocedure import MockProcedure
 app = FastAPI()
 mock_procedure = MockProcedure()
 
-procedures = {mock_procedure.get_name(): mock_procedure.get_task_list()}
+procedures = {mock_procedure.get_name(): mock_procedure.get_task_list_encoded()}
 
 
 @app.get("/")
