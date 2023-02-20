@@ -15,6 +15,7 @@ public class HeadingCache : MonoBehaviour
         if (HeadingCacheSingleton != null && HeadingCacheSingleton != this)
         {
             Destroy(this);
+            EventManager.RemoveListener<HeadingEvent>(UpdateHeading);
         }
         else
         {
