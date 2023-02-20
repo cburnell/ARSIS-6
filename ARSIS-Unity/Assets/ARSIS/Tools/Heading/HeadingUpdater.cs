@@ -11,7 +11,7 @@ public class HeadingUpdater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        headingCache = GetComponentInParent<HeadingCache>();
+        headingCache = HeadingCache.HeadingCacheSingleton;
         text = GetComponent<TMP_Text>();
         Debug.Log(headingCache);
     }

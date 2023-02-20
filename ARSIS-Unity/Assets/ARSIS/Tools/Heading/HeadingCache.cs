@@ -5,11 +5,22 @@ using EventSystem;
 
 public class HeadingCache : MonoBehaviour
 {
+
     public HeadingEvent headingEvent;
-    // Start is called before the first frame update
-    void Start()
+    public static HeadingCache HeadingCacheSingleton { get; private set; }
+    private void Awake()
     {
-        EventManager.AddListener<HeadingEvent>(UpdateHeading);
+        // If there is an instance, and it's not me, delete myself.
+
+        if (HeadingCacheSingleton != null && HeadingCacheSingleton != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            HeadingCacheSingleton = this;
+            EventManager.AddListener<HeadingEvent>(UpdateHeading);
+        }
     }
 
     // Update is called once per frame
@@ -17,9 +28,11 @@ public class HeadingCache : MonoBehaviour
     {
 
     }
+
     void UpdateHeading(HeadingEvent he){
         headingEvent = he;
     }
+
     public string getHeadingString(){
         return headingEvent.heading.ToString();
     }

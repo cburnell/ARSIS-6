@@ -43,6 +43,8 @@ Clicking to the endpoint we just created
 Clicking on try it out and then execture (because it doesnt have anything to call the api with)
 ![After Try It Out](creating_a_feature/try_it_out.png)
 
+Keep clicking the execute button to see that the heading increments every time.
+
 ## Step 2: Create event
 
 Create a file under `/ARSIS-Unity/Assets/ARSIS/Core/EventManager/EventTypes/Telemetry/` called "HeadingEvent.cs"
@@ -128,3 +130,94 @@ public class TelemetryClient : MonoBehaviour
     }
 }
 ```
+
+## Step 4: Create something to listen to event.
+
+Here it gets a bit dicey. With my understanding of Unity Singletons its not generally bad to use them if they are generally immutable or have a limited scope, so I am making the Heading Cache A sington. It could also be a component and it would have to be slecected throught something like `GetComponent`.
+
+Here is an example of the `HeadingCache.cs` class
+
+```
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using EventSystem;
+
+public class HeadingCache : MonoBehaviour
+{
+
+    public HeadingEvent headingEvent;
+    public static HeadingCache HeadingCacheSingleton { get; private set; }
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+
+        if (HeadingCacheSingleton != null && HeadingCacheSingleton != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            HeadingCacheSingleton = this;
+            EventManager.AddListener<HeadingEvent>(UpdateHeading);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void UpdateHeading(HeadingEvent he){
+        headingEvent = he;
+    }
+
+    public string getHeadingString(){
+        return headingEvent.heading.ToString();
+    }
+}
+```
+
+I am not sure if this is the best way to do it so comments are, like always, more than welcome and appreciated.
+
+## Step 5 Display the heading
+
+Here I make something incredibly janky to show the heading being updated. Its so bad. I apologize in advance.
+
+![Hierarchy](creating_a_feature/Hierarchy.png)
+
+I created an empty game object for the feature named heading then 2 children game objects one for the cache and one for the canvas and then added a TMP Text game object. On the cache game object I added the script from above and on the TMP Text I added the following script.
+
+```
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+
+public class HeadingUpdater : MonoBehaviour
+{
+    HeadingCache headingCache;
+    TMP_Text text;
+    // Start is called before the first frame update
+    void Start()
+    {
+        headingCache = HeadingCache.HeadingCacheSingleton;
+        text = GetComponent<TMP_Text>();
+        Debug.Log(headingCache);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        text.text = headingCache.getHeadingString();
+    }
+}
+```
+
+## Check that its working in Unity
+
+Run the unity scene and see that it is working
+
+![Final](creating_a_feature/final.gif)
