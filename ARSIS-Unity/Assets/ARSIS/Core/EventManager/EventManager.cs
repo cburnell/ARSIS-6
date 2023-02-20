@@ -72,6 +72,7 @@ namespace EventSystem
         /// <param name="data">The data to pass to events</param>
         public static void Trigger(dynamic data)
         {
+            /* Debug.Log(data); */
             if (eventDictionary.ContainsKey(data.GetType()))
             {
                 eventDictionary[data.GetType()](data);

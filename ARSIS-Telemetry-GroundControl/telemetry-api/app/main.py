@@ -2,10 +2,19 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+app.mock_heading = 0.0
+
 
 @app.get("/")
 async def root():
     return {"message": "Telemetry API"}
+
+
+@app.get("/heading/")
+async def getHeading():
+    app.mock_heading += 1
+    app.mock_heading %= 360
+    return {"heading": app.mock_heading}
 
 
 # TODO: Move this into a locations module

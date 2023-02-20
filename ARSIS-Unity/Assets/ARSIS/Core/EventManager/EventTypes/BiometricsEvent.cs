@@ -2,13 +2,13 @@ using EventSystem;
 
 public class BiometricsEvent : BaseArsisEvent
 {
-    public readonly float lat;
-    public readonly float lon;
+    public readonly float hr;
+    public readonly float o2;
 
-    public BiometricsEvent(float lat, float lon)
+    public BiometricsEvent(float hr, float o2)
     {
-        this.lat = lat;
-        this.lon = lon;
+        this.hr = hr;
+        this.o2 = o2;
     }
 }
 

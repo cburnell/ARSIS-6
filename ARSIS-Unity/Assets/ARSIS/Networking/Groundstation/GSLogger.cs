@@ -23,18 +23,13 @@ public class GSLogger : MonoBehaviour
     void GSLoggerCallback(dynamic data){
         byte[] loggingBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
         string loggingString = JsonConvert.SerializeObject(data);
-        Debug.Log(loggingString);
         string escapedString = loggingString.Replace("\"","\\\"");
-        Debug.Log(escapedString);
         StartCoroutine(GSLoggerCoroutine(escapedString));
-        /* StartCoroutine(GSLoggerCoroutine(loggingBytes)); */
     }
 
     IEnumerator GSLoggerCoroutine(string loggingString){
-    /* IEnumerator GSLoggerCoroutine(byte[] loggingBytes){ */
 
         string toSend = "{\"data\": \""+ loggingString +"\"}";
-        Debug.Log(toSend);
         byte[] myData = System.Text.Encoding.UTF8.GetBytes(toSend);
         using (UnityWebRequest www = UnityWebRequest.Put(groundStationUrl, myData))
         {
@@ -51,7 +46,7 @@ public class GSLogger : MonoBehaviour
             }
             else
             {
-                Debug.Log("Upload complete!");
+                /* Debug.Log("Upload complete!"); */
             }
         }
 
