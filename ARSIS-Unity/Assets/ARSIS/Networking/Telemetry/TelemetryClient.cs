@@ -11,10 +11,13 @@ public class TelemetryClient : MonoBehaviour
     private static string telemetryServerLocation = telemetryServerUrl + "/location/";
     private static string telemetryServerBiometrics = telemetryServerUrl + "/biometrics/";
     private static string telemetryServerHeading = telemetryServerUrl + "/heading/";
+    // We create a timer outside of the loop to make sure we're not creating and then GCing constantly
     private WaitForSeconds telemetryPollingDelay = new WaitForSeconds(1.0f);
+
     // Start is called before the first frame update
     void Start()
     {
+        // Start all of our polling when this starts
         StartCoroutine(StartPollingTelemetryApi());
     }
 
@@ -23,12 +26,17 @@ public class TelemetryClient : MonoBehaviour
     {
 
     }
+
     IEnumerator StartPollingTelemetryApi() {
+        //Start each one as its own coroutine
         StartCoroutine(StartPollingEvent<HeadingEvent>(telemetryServerHeading, telemetryPollingDelay));
         StartCoroutine(StartPollingEvent<LocationEvent>(telemetryServerLocation, telemetryPollingDelay));
         StartCoroutine(StartPollingEvent<BiometricsEvent>(telemetryServerBiometrics, telemetryPollingDelay));
         yield break;
     }
+
+    //Generic way to creating a polling event using the type of event to be triggered when it gets a sucessful request.
+    //TODO: Add more robust handling of faults.
     IEnumerator StartPollingEvent<E>(string url, WaitForSeconds tpd){
         while(true){
             UnityWebRequest www = UnityWebRequest.Get(url);
@@ -46,6 +54,5 @@ public class TelemetryClient : MonoBehaviour
             }
             yield return telemetryPollingDelay;
         }
-
     }
 }
