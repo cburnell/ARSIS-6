@@ -8,12 +8,11 @@ using Newtonsoft.Json;
 
 public class ProcedureUpdate : MonoBehaviour
 {
-    private static string procedureEndpoint = "http://0.0.0.0:8181/procedure/";
+    private static string procedureEndpoint = "http://0.0.0.0:8181/procedures/";
     // Start is called before the first frame update
     void Start()
     {
         EventManager.AddListener<ProcedureGet>(getProcedureTrigger);
-
     }
 
     // Update is called once per frame
@@ -27,6 +26,7 @@ public class ProcedureUpdate : MonoBehaviour
     }
     IEnumerator getProcedure(ProcedureGet procedureToGet){
         string name = procedureToGet.procedureName;
+        Debug.Log(name);
         UnityWebRequest www = UnityWebRequest.Get(procedureEndpoint+name);
         yield return www.SendWebRequest();
 
@@ -38,9 +38,7 @@ public class ProcedureUpdate : MonoBehaviour
             string resultString = www.downloadHandler.text;
             Debug.Log(resultString);
             ProcedureEvent newProcedureEvent = JsonConvert.DeserializeObject<ProcedureEvent>(resultString);
-            /* var thingToTest = JsonConvert.DeserializeObject<ProcedureEvent>(resultString); */
-            /* Debug.Log(thingToTest.procedureName); */
-            Debug.Log("before trigger" + newProcedureEvent.procedureName);
+            Debug.Log("before trigger" + newProcedureEvent.name);
             EventManager.Trigger(newProcedureEvent);
         }
     }

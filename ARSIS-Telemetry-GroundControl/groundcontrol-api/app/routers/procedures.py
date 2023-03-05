@@ -14,12 +14,12 @@ async def procedures():
     return in_mem_procedures
 
 
-@router.get("/procedure/{name}")
+@router.get("/{name}")
 def procedure(name: str):
     res = in_mem_procedures.get(name, None)
     if res is not None:
         return {
-            "procedureName": name,
+            "name": name,
             "taskList": res,
         }
-    return {"procedureName": "Not found", "taskList": []}
+    return {"name": "Not found", "taskList": []}

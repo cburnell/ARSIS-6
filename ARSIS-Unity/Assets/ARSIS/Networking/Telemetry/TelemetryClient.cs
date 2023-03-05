@@ -40,11 +40,11 @@ public class TelemetryClient : MonoBehaviour
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success) {
-            Debug.Log(www.error);
+            /* Debug.Log(www.error); */
         }
         else {
             // Show results as text
-            Debug.Log(www.downloadHandler.text);
+            /* Debug.Log(www.downloadHandler.text); */
 
         }
     }
@@ -56,12 +56,12 @@ public class TelemetryClient : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-        Debug.Log(www.error);
+        /* Debug.Log(www.error); */
         }
         else
         {
         // Show results as text
-        Debug.Log(www.downloadHandler.text);
+        /* Debug.Log(www.downloadHandler.text); */
 
         }
     }
@@ -73,12 +73,12 @@ public class TelemetryClient : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-        Debug.Log(www.error);
+        /* Debug.Log(www.error); */
         }
         else
         {
         // Show results as text
-        Debug.Log(www.downloadHandler.text);
+        /* Debug.Log(www.downloadHandler.text); */
 
         }
     }
@@ -90,12 +90,12 @@ public class TelemetryClient : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-        Debug.Log(www.error);
+        /* Debug.Log(www.error); */
         }
         else
         {
         // Show results as text
-        Debug.Log(www.downloadHandler.text);
+        /* Debug.Log(www.downloadHandler.text); */
 
         }
     }
@@ -104,7 +104,7 @@ public class TelemetryClient : MonoBehaviour
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success) {
-            Debug.Log(www.error);
+            /* Debug.Log(www.error); */
         }
         else {
             string resultString = www.downloadHandler.text;

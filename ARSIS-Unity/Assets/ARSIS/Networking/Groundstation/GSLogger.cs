@@ -15,7 +15,7 @@ public class GSLogger : MonoBehaviour
         // StartCoroutine(GetLog());
     }
 
-    /* 
+    /*
         Added Coroutines (GetLog) for quick testing without an event manager. feel free to remove.
   */
     IEnumerator GetLog() {
@@ -28,12 +28,12 @@ public class GSLogger : MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(www.error);
+                /* Debug.Log(www.error); */
             }
             else
             {
                 // Show results as text
-                Debug.Log(www.downloadHandler.text);
+                /* Debug.Log(www.downloadHandler.text); */
 
             }
             yield return new WaitForSeconds(0.5f);
@@ -44,9 +44,7 @@ public class GSLogger : MonoBehaviour
     {
         byte[] loggingBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
         string loggingString = JsonConvert.SerializeObject(data);
-        Debug.Log(loggingString);
         string escapedString = loggingString.Replace("\"", "\\\"");
-        Debug.Log(escapedString);
         StartCoroutine(GSLoggerCoroutine(escapedString));
         /* StartCoroutine(GSLoggerCoroutine(loggingBytes)); */
     }
@@ -56,7 +54,6 @@ public class GSLogger : MonoBehaviour
         /* IEnumerator GSLoggerCoroutine(byte[] loggingBytes){ */
 
         string toSend = "{\"data\": \"" + loggingString + "\"}";
-        Debug.Log(toSend);
         byte[] myData = System.Text.Encoding.UTF8.GetBytes(toSend);
         using (UnityWebRequest www = UnityWebRequest.Put(groundStationUrl, myData))
         {
@@ -74,7 +71,7 @@ public class GSLogger : MonoBehaviour
         }
         else
         {
-            Debug.Log("Upload complete!");
+            /* Debug.Log("Upload complete!"); */
         }
         }
 

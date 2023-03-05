@@ -20,20 +20,20 @@ class MockProcedure:
         task_1 = {
             "name": "Name of Task",
             "summary": "Summary of what task is meant to do",
-            "list": task_1_list,
+            "stepList": task_1_list,
         }
 
         task_2_list = [
             {
                 "type": "text",
                 "body": "2nd step of mock procedure",
-                "next_steps": {"procedure": "Idle Procedure", "step": 0},
+                # "next_steps": {"procedure": "Idle Procedure", "step": 0},
             },
         ]
         task_2 = {
             "name": "Name of Task",
             "summary": "Summary of what task is meant to do",
-            "list": task_2_list,
+            "stepList": task_2_list,
         }
         self.task_list = [task_1, task_2]
 
