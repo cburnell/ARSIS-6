@@ -4,6 +4,7 @@ import base64
 class MockProcedure:
     def __init__(self):
         self.name = "Mock Procedure"
+        self.summary = "This is a 100% fake procedure that only exists to make sure we can get data through the system"
 
         suits_image = base64.b64encode(
             open("app/routers/on_server_procedures/NASASUITS-logo.png", "rb").read()
