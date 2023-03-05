@@ -4,7 +4,7 @@ import base64
 class MockProcedure:
     def __init__(self):
         self.name = "Mock Procedure"
-        suits_image = base64.b64encode(open("app/NASASUITS-logo.png", "rb").read())
+        suits_image = base64.b64encode(open("app/routers/on_server_procedures/NASASUITS-logo.png", "rb").read())
         self.task_list = [
             ["text", "asdfasdf asdfasdf asdf sadf asdf asdf"],
             [
