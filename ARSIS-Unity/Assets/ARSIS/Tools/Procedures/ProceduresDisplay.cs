@@ -29,7 +29,8 @@ public class ProceduresDisplay : MonoBehaviour
             text.text = pe.taskList.Count.ToString();
             Task task0 = pe.taskList[0];
             foreach(Step s in task0.stepList){
-                    GameObject taskGO = new GameObject();
+                GameObject taskGO = new GameObject();
+                taskGO.transform.SetParent(this.transform);
                 if (s.type == "image"){
                     Image suits_image = taskGO.AddComponent<Image>();
                     byte[]  imageBytes = Convert.FromBase64String(s.body);
@@ -38,8 +39,9 @@ public class ProceduresDisplay : MonoBehaviour
                     Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
                     suits_image.sprite = sprite;
                 }
-                if (s.type == "body"){
-
+                if (s.type == "text"){
+                    TextMeshProUGUI newText = taskGO.AddComponent<TextMeshProUGUI>();
+                    newText.text = s.body;
                 }
                 Debug.Log(s.type);
             }
