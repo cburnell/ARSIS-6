@@ -13,6 +13,8 @@ const Step = (props) => {
       "data:image/png;base64,",
       "data:image/jpg;base64,",
       "data:image/jpeg;base64,",
+      "data:*/*;base64,",
+      "data:image/png;base64,"
     ]
 
     let cantRead = true;
@@ -20,6 +22,7 @@ const Step = (props) => {
     reader.addEventListener(
       "load",
       () => {
+        console.log(reader.result);
         possibleHeaders.forEach(header => {
           if (reader.result.startsWith(header)) {
             setPreview(reader.result.replace(header, ""));
