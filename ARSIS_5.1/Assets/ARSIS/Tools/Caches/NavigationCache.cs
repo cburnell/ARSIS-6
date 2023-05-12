@@ -12,9 +12,6 @@ public class NavigationCache : MonoBehaviour
     public int numberOfNavigation = 0;
     public TMP_Text em3TMP;
     public string toShow3;
-    public TMP_Text em4TMP;
-    public string toShow4;
-    bool val;
 
     void Start()
     {
@@ -25,7 +22,7 @@ public class NavigationCache : MonoBehaviour
     }
 
     void Update(){
-        em3TMP.text = numberOfNavigation.ToString();
+        //em3TMP.text = numberOfNavigation.ToString();
     }
 
     private void Awake()

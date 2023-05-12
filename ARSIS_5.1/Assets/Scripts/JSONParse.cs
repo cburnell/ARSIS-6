@@ -96,6 +96,7 @@ public class JSONParse : MonoBehaviour {
     public bool parsingOn = true;
 
     public static JSONParse S; 
+    public BiometricsCache BiometricsCacheInstance;
 
     void Start ()
     {
@@ -103,180 +104,41 @@ public class JSONParse : MonoBehaviour {
 
         m_OutputErrorData = FindObjectOfType<OutputErrorData>();
         //StartCoroutine(RunStartWWW());
-        InvokeRepeating("UpdateSystemData", 1, 5);
+        InvokeRepeating("UpdateUI", 1, 5);
         //InvokeRepeating("UpdateSystemSwitchData", 2, 3);
+        BiometricsCacheInstance = BiometricsCache.BiometricsCacheSingleton;
     }
 
-    public void toggleParsing()
+    private void UpdateUI()
     {
-        if (parsingOn)
-        {
-            parsingOn = false; 
-        } else
-        {
-            parsingOn = true; 
+        int i = 0;
+        foreach((int val, int[] range, string name) in BiometricsCacheInstance.biometricsEvent.intCheckList){
+            m_SuitDataUIElements[i].SetData(name, val, range[0], range[1], "");
+            i++;
         }
-    }
-
-    private void OnApplicationQuit ()
-    {
-        /*
-        while(!weCanQuit)
-        {
-            //StartCoroutine(RunStopWWW()); 
+        foreach((bool val, bool range, string name) in BiometricsCacheInstance.biometricsEvent.boolCheckList){
+            float v = val ? 1 : 0;
+            m_SuitDataUIElements[i].SetData(name, v, 0, 1, "");
+            i++;
         }
-        */
-    }
-
-    private void UpdateSystemData()
-    {
-        StartCoroutine(RunWWW());
-    }
-
-    private void UpdateSystemSwitchData()
-    {
-        if (m_bGettingSuitData)
-        {
-            StopCoroutine(RunSwitchWWW());
-        }
-
-        StartCoroutine(RunSwitchWWW());   
-    }
-/*
-    IEnumerator RunStartWWW()
-    {
-        weCanQuit = true;
-        using (UnityWebRequest www = UnityWebRequest.Get("https://agile-badlands-39994.herokuapp.com/api/start-sim"))
-        {
-            yield return www.SendWebRequest();
-        }
-    }
-
-    IEnumerator RunStopWWW()
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get("https://agile-badlands-39994.herokuapp.com/api-stop-sim"))
-        {
-            yield return www.SendWebRequest();
-        }
-    }
-    */
-    IEnumerator RunWWW()
-    {
-        if (!parsingOn) yield break; ; 
-        if (m_bGettingSuitData == true) yield break;
-
-        using (UnityWebRequest www = UnityWebRequest.Get(testing ? testurl : url))
-        {
-            yield return www.SendWebRequest();
-
-            m_bGettingSuitData = true;
-            string json = ""; 
-            if (www.isNetworkError)
-            {
-                bioText.text = "NETWORK ERROR Not connected to server :(\n"; 
-                bioText.text += www.error;
-                m_bGettingSuitData = false;
-            }
-            else if (www.isHttpError)
-            {
-                bioText.text = "HTTP ERROR Not connected to server :( :( :(";
-                bioText.text += www.error;
-                m_bGettingSuitData = false;
-            }
-            else 
-            {
-                // We are connected to the server 
-
-                // Use line below only if the JSON comes in with brackets around it 
-                //json = RemoveBrackets(www.downloadHandler.text);
-                json = www.downloadHandler.text;
-                m_bGettingSuitData = false;
-
-                //Debug.Log("Connected to biometrics server");
-            }
-
-            if (!json.Equals(""))
-            {
-                json = json.Substring(1, json.Length - 2);
-
-                SuitData jsonObject = JsonUtility.FromJson<SuitData>(www.downloadHandler.text);
-                //LineData data = new LineData();
-
-                //data.m_DataValue = jsonObject.v_fan;
-                //data.m_Time = Time.time; 
-
-                //lineGraph.AddLineDataPoint(data);
-                //Debug.Log("Parsing");
-                UpdateUI(jsonObject);
-
-                // Get the lesser time between oxygen and battery 
-                string identifier = "";
-                string lesserTime = getLesserTime(jsonObject.t_oxygen, jsonObject.t_battery, jsonObject.t_water, out identifier);
-                
-                // Display Time Left 
-                timeLeftText.text = "Time Left: " + lesserTime + " (" + identifier + ")";
-                m_bGettingSuitData = false;
-
-                m_BiometricInCautionElement.SetActive(WarningSingleton.m_Singleton.m_DataInWarning);
-
-            }
-            else
-            {
-                Debug.Log("no data recieved from the server");
-                m_bGettingSuitData = false;
-
-            }
-
-
-        }
-    }
-
-    private void UpdateUI(SuitData data)
-    {
-        float waterHours = float.Parse(data.t_water.Split(':')[0]);
-        float oxygenHours = float.Parse(data.t_oxygen.Split(':')[0]);
-        float batteryHours = float.Parse(data.t_battery.Split(':')[0]);
-
-        if (testing)
-        {
-            data.v_fan = testVal;
-        }
-        
-        CheckOffNominalRange("Internal Suit Pressure", data.p_suit, 2.0f, 4.0f, "psid");
-        CheckOffNominalRange("Time Life Battery", batteryHours, 0.0f, 10.0f, "hours");
-        CheckOffNominalRange("Time Life Oxygen", oxygenHours, 0.0f, 10.0f, "hours");
-        CheckOffNominalRange("Time Life Water", waterHours, 0.0f, 10.0f, "hours");
-        CheckOffNominalRange("SUB Pressure", data.p_sub, 2.0f, 4.0f, "psia");
-        CheckOffNominalRange("SUB Tempurature", data.t_sub, -148.0f, 248.0f, "° F");
-        CheckOffNominalRange("Fan Tachometer", data.v_fan, 10000.0f, 40000.0f, "RPM");
-        CheckOffNominalRange("Extravehicular Activity Rate", data.p_o2, 0.0f, 9.0f, "hours");
-        CheckOffNominalRange("Oxygen Pressure", data.p_o2, 750.0f, 950.0f, "psia");
-        CheckOffNominalRange("Oxygen Rate", data.rate_o2, 0.5f, 1.0f, "psi/min");
-        CheckOffNominalRange("Battery Capacity", data.cap_battery, 0.0f, 30.0f, "ah");
-        CheckOffNominalRange("H20 Gas Pressure", data.p_h2o_g, 14.0f, 16.0f, "psia");
-        CheckOffNominalRange("H20 Liquid Pressure", data.p_h2o_l, 14.0f, 16.0f, "psia");
-        CheckOffNominalRange("SOP Pressure", data.p_sop, 750.0f, 950.0f, "psia");
-        CheckOffNominalRange("SOP Rate", data.rate_sop, 0.5f, 1.0f, "psi/min");
-        CheckOffNominalRange("Heart Rate", data.heart_bpm, 80, 100, "bpm");
-
-        m_SuitDataUIElements[0].SetData("Internal Suit Pressure", data.p_suit, 2.0f, 4.0f, "psid");
-        m_SuitDataUIElements[1].SetData("Time Life Battery", batteryHours, 0.0f, 10.0f, "hours");
-        m_SuitDataUIElements[2].SetData("Time Life Oxygen", oxygenHours, 0.0f, 10.0f, "hours");
-        m_SuitDataUIElements[3].SetData("Time Life Water", waterHours, 0.0f, 10.0f, "hours");
-        m_SuitDataUIElements[4].SetData("SUB Pressure", data.p_sub, 2.0f, 4.0f, "psia");
-        m_SuitDataUIElements[5].SetData("SUB Tempurature", data.t_sub, -148.0f, 248.0f, "° F");
-        m_SuitDataUIElements[6].SetData("Fan Tachometer", data.v_fan, 10000.0f, 40000.0f, "RPM");
-        m_SuitDataUIElements[7].SetData("Extravehicular Activity Rate", data.p_o2, 0.0f, 9.0f, "hours");
-        m_SuitDataUIElements[8].SetData("Oxygen Pressure", data.p_o2, 750.0f, 950.0f, "psia");
-        m_SuitDataUIElements[9].SetData("Oxygen Rate", data.rate_o2, 0.5f, 1.0f, "psi/min");
-        m_SuitDataUIElements[10].SetData("Battery Capacity", data.cap_battery, 0.0f, 30.0f, "ah");
-        m_SuitDataUIElements[11].SetData("H20 Gas Pressure", data.p_h2o_g, 14.0f, 16.0f, "psia");
-        m_SuitDataUIElements[12].SetData("H20 Liquid Pressure", data.p_h2o_l, 14.0f, 16.0f, "psia");
-        m_SuitDataUIElements[13].SetData("SOP Pressure", data.p_sop, 750.0f, 950.0f, "psia");
-        m_SuitDataUIElements[14].SetData("SOP Rate", data.rate_sop, 0.5f, 1.0f, "psi/min");
-        m_SuitDataUIElements[15].SetData("Primary Oxygen", data.ox_primary);
-        m_SuitDataUIElements[16].SetData("Secondary Oxygen", data.ox_secondary);
-        m_SuitDataUIElements[17].SetData("Heart Rate", data.heart_bpm,80,100,"bpm");
+        // m_SuitDataUIElements[0].SetData("Internal Suit Pressure", data.p_suit, 2.0f, 4.0f, "psid");
+        // m_SuitDataUIElements[1].SetData("Time Life Battery", batteryHours, 0.0f, 10.0f, "hours");
+        // m_SuitDataUIElements[2].SetData("Time Life Oxygen", oxygenHours, 0.0f, 10.0f, "hours");
+        // m_SuitDataUIElements[3].SetData("Time Life Water", waterHours, 0.0f, 10.0f, "hours");
+        // m_SuitDataUIElements[4].SetData("SUB Pressure", data.p_sub, 2.0f, 4.0f, "psia");
+        // m_SuitDataUIElements[5].SetData("SUB Tempurature", data.t_sub, -148.0f, 248.0f, "° F");
+        // m_SuitDataUIElements[6].SetData("Fan Tachometer", data.v_fan, 10000.0f, 40000.0f, "RPM");
+        // m_SuitDataUIElements[7].SetData("Extravehicular Activity Rate", data.p_o2, 0.0f, 9.0f, "hours");
+        // m_SuitDataUIElements[8].SetData("Oxygen Pressure", data.p_o2, 750.0f, 950.0f, "psia");
+        // m_SuitDataUIElements[9].SetData("Oxygen Rate", data.rate_o2, 0.5f, 1.0f, "psi/min");
+        // m_SuitDataUIElements[10].SetData("Battery Capacity", data.cap_battery, 0.0f, 30.0f, "ah");
+        // m_SuitDataUIElements[11].SetData("H20 Gas Pressure", data.p_h2o_g, 14.0f, 16.0f, "psia");
+        // m_SuitDataUIElements[12].SetData("H20 Liquid Pressure", data.p_h2o_l, 14.0f, 16.0f, "psia");
+        // m_SuitDataUIElements[13].SetData("SOP Pressure", data.p_sop, 750.0f, 950.0f, "psia");
+        // m_SuitDataUIElements[14].SetData("SOP Rate", data.rate_sop, 0.5f, 1.0f, "psi/min");
+        // m_SuitDataUIElements[15].SetData("Primary Oxygen", data.ox_primary);
+        // m_SuitDataUIElements[16].SetData("Secondary Oxygen", data.ox_secondary);
+        // m_SuitDataUIElements[17].SetData("Heart Rate", data.heart_bpm,80,100,"bpm");
     }
 
     private void CheckOffNominalRange(string dataTitle, float dataValue, float lower, float upper, string unit)

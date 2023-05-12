@@ -15,8 +15,6 @@ public class BiometricsCache : MonoBehaviour
     public int OutOfRangeCount;
     public HashSet<string> outOfRangeBiometrics;
     
-
-    
     private void Awake()
     {
         BiometricsList = new List<BiometricsEvent>();
@@ -55,6 +53,7 @@ public class BiometricsCache : MonoBehaviour
             }
         }
     }
+
     public void acknowledgeOutOfRange(string name){
         outOfRangeBiometrics.Remove(name);
     }

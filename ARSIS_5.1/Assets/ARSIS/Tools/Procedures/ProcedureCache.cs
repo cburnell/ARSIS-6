@@ -14,9 +14,6 @@ public class ProcedureCache : MonoBehaviour
     
     public TMP_Text em1TMP;
     public string toShow1;
-    public TMP_Text em2TMP;
-    public string toShow2;
-    
 
     void Start()
     {
@@ -27,7 +24,7 @@ public class ProcedureCache : MonoBehaviour
     }
 
     void Update(){
-        em1TMP.text = numberOfProcedures.ToString();
+        //em1TMP.text = numberOfProcedures.ToString();
     }
 
     private void Awake()
