@@ -51,7 +51,8 @@ public class TelemetryClient : MonoBehaviour
     {
         updateServerEndpointDict();
         StartCoroutine(PopulateRegisterdUser());
-        StartCoroutine(StartPollingTelemetryApi());
+        //StartCoroutine(StartPollingTelemetryApi());
+        InvokeRepeating("StartPollingTelemetryApi", 1, 1);
     }
 
     void updateServerEndpointDict(){
