@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ARSISEventSystem;
+using TMPro; 
 
 public class ProcedureCache : MonoBehaviour
 {
@@ -9,13 +10,24 @@ public class ProcedureCache : MonoBehaviour
     private Dictionary<string, ProcedureEvent> procedureCache;
     private WaitForSeconds procedurePollingDelay = new WaitForSeconds(1.0f);
     public int numberOfProcedures = 0;
+    public ProcedureUpdate ProcedureUpdateInstance;
+    
+    public TMP_Text em1TMP;
+    public string toShow1;
+    public TMP_Text em2TMP;
+    public string toShow2;
+    
 
     void Start()
     {
-        EventManager.AddListener<ProcedureEvent>(proccessProcedureEvent);
-        EventManager.AddListener<ProcedureDictionary>(proccessProcedureDictionary);
+        //EventManager.AddListener<ProcedureEvent>(proccessProcedureEvent);
+        //EventManager.AddListener<ProcedureDictionary>(proccessProcedureDictionary);
         procedureCache = new Dictionary<string, ProcedureEvent>();
-        StartCoroutine(StartProcedureCache());
+        ProcedureUpdateInstance = ProcedureUpdate.Instance;
+    }
+
+    void Update(){
+        em1TMP.text = numberOfProcedures.ToString();
     }
 
     private void Awake()
@@ -59,7 +71,7 @@ public class ProcedureCache : MonoBehaviour
         yield return null;
     }
 
-    void proccessProcedureDictionary(ProcedureDictionary pd){
+    public void proccessProcedureDictionary(ProcedureDictionary pd){
         if (pd.procedureDictionary == null){
             return;
         }

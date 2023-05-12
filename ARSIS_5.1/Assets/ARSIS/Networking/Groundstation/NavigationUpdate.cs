@@ -9,19 +9,23 @@ using System.Threading.Tasks;
 
 public class NavigationUpdate : MonoBehaviour
 {
-    private static string navigationEndpoint = "http://127.0.0.1:8181/navigation/";
+    
+    private static string navigationEndpoint = "http://"+ARSISConstants.ARSISUser.ip+":8181/navigation/";
     private readonly HttpClient httpClient = new HttpClient();
     // Start is called before the first frame update
     TaskFactory taskFactory;
+    public static NavigationCache NavigationCacheInstance;
     void Start()
     {
-        EventManager.AddListener<NavigationGet>(getNavigationTrigger);
-        EventManager.AddListener<UpdateNavigationEvent>(updateNavigationTrigger);
+        //EventManager.AddListener<NavigationGet>(getNavigationTrigger);
+        //EventManager.AddListener<UpdateNavigationEvent>(updateNavigationTrigger);
         taskFactory = new TaskFactory();
+        NavigationCacheInstance = NavigationCache.Instance;
+        InvokeRepeating("updateNavigationTrigger", 1, 15);
     }
 
     // TODO: Make this something that deals with generics
-    void updateNavigationTrigger(UpdateNavigationEvent up){
+    void updateNavigationTrigger(){
         Debug.Log("updateNavigationTrigger");
         taskFactory.StartNew(() =>
         {
@@ -45,7 +49,8 @@ public class NavigationUpdate : MonoBehaviour
             Debug.Log(resultString);
             Dictionary<string, NavigationEvent> dictOnly = JsonConvert.DeserializeObject<Dictionary<string, NavigationEvent>>(resultString);
             NavigationDictionary newNavigationDictionary = new NavigationDictionary(dictOnly);
-            EventManager.Trigger(newNavigationDictionary);
+            // EventManager.Trigger(newNavigationDictionary);
+            NavigationCacheInstance.proccessNavigationDictionary(newNavigationDictionary);
         }
         return 0;
     }

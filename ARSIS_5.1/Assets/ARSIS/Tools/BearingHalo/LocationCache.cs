@@ -17,21 +17,20 @@ public class LocationCache : MonoBehaviour
         if (LocationCacheSingleton != null && LocationCacheSingleton != this)
         {
             Destroy(this);
-            EventManager.RemoveListener<LocationEvent>(UpdateLocation);
+            //EventManager.RemoveListener<LocationEvent>(UpdateLocation);
         }
         else
         {
             LocationCacheSingleton = this;
-            EventManager.AddListener<LocationEvent>(UpdateLocation);
+            //EventManager.AddListener<LocationEvent>(UpdateLocation);
         }
     }
-    void UpdateLocation(LocationEvent he){
+    public void UpdateLocation(LocationEvent he){
         locationEvent = he;
          if (LocationList.Count > MAX_ENTRYS){
             LocationList.RemoveAt(0);
         }
         LocationList.Add(he);
-        Debug.Log(LocationList.Count);
     }
 
     public float getHeading(){

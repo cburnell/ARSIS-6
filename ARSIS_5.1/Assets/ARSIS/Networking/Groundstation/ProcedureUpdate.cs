@@ -10,20 +10,34 @@ using System.Threading.Tasks;
 
 public class ProcedureUpdate : MonoBehaviour
 {
-    private static string procedureEndpoint = "http://127.0.0.1:8181/procedures/";
+    private static string procedureEndpoint = "http://"+ARSISConstants.ARSISUser.ip+":8181/procedures/";
     private readonly HttpClient httpClient = new HttpClient();
     // Start is called before the first frame update
     TaskFactory taskFactory;
+    public static ProcedureUpdate Instance;
+    public ProcedureCache ProcedureCacheInstance;
     void Start()
     {
-        EventManager.AddListener<ProcedureGet>(getProcedureTrigger);
-        EventManager.AddListener<UpdateProceduresEvent>(updateProceduresTrigger);
         Debug.Log(System.Environment.Version);
         taskFactory = new TaskFactory();
+        ProcedureCacheInstance = ProcedureCache.Instance;
+        InvokeRepeating("updateProceduresTrigger", 1, 15);
+    }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     // TODO: Make this something that deals with generics
-    void updateProceduresTrigger(UpdateProceduresEvent up){
+    public void updateProceduresTrigger(){
         Debug.Log("update procedures trigger");
         taskFactory.StartNew(() =>
         {
@@ -47,7 +61,8 @@ public class ProcedureUpdate : MonoBehaviour
             Debug.Log(resultString);
             Dictionary<string, ProcedureEvent> dictOnly = JsonConvert.DeserializeObject<Dictionary<string, ProcedureEvent>>(resultString);
             ProcedureDictionary newProcedureDictionary = new ProcedureDictionary(dictOnly);
-            EventManager.Trigger(newProcedureDictionary);
+            // EventManager.Trigger(newProcedureDictionary);
+            ProcedureCacheInstance.proccessProcedureDictionary(newProcedureDictionary);
         }
         return 0;
     }

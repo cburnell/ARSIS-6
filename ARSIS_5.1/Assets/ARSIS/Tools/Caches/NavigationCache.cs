@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ARSISEventSystem;
+using TMPro; 
 
 public class NavigationCache : MonoBehaviour
 {
@@ -9,13 +10,22 @@ public class NavigationCache : MonoBehaviour
     private Dictionary<string, NavigationEvent> navigationCache;
     private WaitForSeconds navigationPollingDelay = new WaitForSeconds(1.0f);
     public int numberOfNavigation = 0;
+    public TMP_Text em3TMP;
+    public string toShow3;
+    public TMP_Text em4TMP;
+    public string toShow4;
+    bool val;
 
     void Start()
     {
-        EventManager.AddListener<NavigationEvent>(proccessNavigationEvent);
-        EventManager.AddListener<NavigationDictionary>(proccessNavigationDictionary);
+        //EventManager.AddListener<NavigationEvent>(proccessNavigationEvent);
+        //EventManager.AddListener<NavigationDictionary>(proccessNavigationDictionary);
         navigationCache = new Dictionary<string, NavigationEvent>();
         StartCoroutine(StartNavigationCache());
+    }
+
+    void Update(){
+        em3TMP.text = numberOfNavigation.ToString();
     }
 
     private void Awake()
@@ -59,7 +69,7 @@ public class NavigationCache : MonoBehaviour
         yield return null;
     }
 
-    void proccessNavigationDictionary(NavigationDictionary pd){
+    public void proccessNavigationDictionary(NavigationDictionary pd){
         if (pd.navigationDictionary == null){
             return;
         }
