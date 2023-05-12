@@ -47,6 +47,7 @@ public class MenuController : MonoBehaviour
     public GameObject m_calibrationMenu;
     public GameObject m_debugMenu;
     public GameObject m_beaconListMenu;
+    public GameObject m_roverMenu;
 
     //Diagrams
     public Texture2D d_BGA_Hardware_Overview;
