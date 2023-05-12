@@ -3413,253 +3413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f992d1225a54ae64790735e66066cba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allProcedures:
-  - procedure_title: First Procedure
-    emergency: 0
-    num_steps: 2
-    Tasks:
-    - Title: Prepare UIA
-      SubTasks:
-      - text: Ensure that POWER EV-1 is set to OFF
-        type: 
-        warning: 
-        image: 
-        varName: emu1
-        expectedValue: OFF
-        imageTex: {fileID: 0}
-      - text: Ensure that POWER EV-2 is set to OFF
-        type: 
-        warning: 
-        image: 
-        varName: emu2
-        expectedValue: OFF
-        imageTex: {fileID: 0}
-      - text: Ensure that WATER SUPPLY EV-1 is set to CLOSE
-        type: 
-        warning: 
-        image: 
-        varName: ev1_supply
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Ensure that WATER SUPPLY EV-2 is set to CLOSE
-        type: 
-        warning: 
-        image: 
-        varName: ev2_supply
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Ensure that OXYGEN EV-1 is set to CLOSE
-        type: 
-        warning: 
-        image: 
-        varName: emu1_O2
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Ensure that OXYGEN EV-2 is set to CLOSE
-        type: 
-        warning: 
-        image: 
-        varName: emu2_O2
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Switch O2 Vent to OPEN
-        type: 
-        warning: 
-        image: 
-        varName: O2_vent
-        expectedValue: VENT
-        imageTex: {fileID: 0}
-      - text: O2 vent - CLOSE
-        type: 
-        warning: 
-        image: 
-        varName: O2_vent
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-    - Title: Fill and Dump UIA and SCU O2 Lines
-      SubTasks:
-      - text: Check that O2 VENT is set to CLOSED
-        type: 
-        warning: 
-        image: 
-        varName: O2_vent
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Switch OXYGEN EV-1 to OPEN
-        type: 
-        warning: 
-        image: 
-        varName: emu1_O2
-        expectedValue: OPEN
-        imageTex: {fileID: 0}
-      - text: Switch OXYGEN EV-1 to CLOSED
-        type: 
-        warning: 
-        image: 
-        varName: emu1_O2
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Switch O2 Vent to OPEN
-        type: 
-        warning: 
-        image: 
-        varName: O2_vent
-        expectedValue: VENT
-        imageTex: {fileID: 0}
-    - Title: Final Pressurization
-      SubTasks:
-      - text: Check that O2 VENT is set to CLOSED
-        type: 
-        warning: 
-        image: 
-        varName: O2_vent
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-      - text: Switch OXYGEN EV-1 to OPEN
-        type: 
-        warning: 
-        image: 
-        varName: emu1_O2
-        expectedValue: OPEN
-        imageTex: {fileID: 0}
-      - text: Switch OXYGEN EV-1 to CLOSE
-        type: 
-        warning: 
-        image: 
-        varName: emu1_O2
-        expectedValue: CLOSE
-        imageTex: {fileID: 0}
-    - Title: Preparation for Donning
-      SubTasks:
-      - text: Check that UIA POWER EV-1 is set to OFF
-        type: 
-        warning: 
-        image: 
-        varName: emu1
-        expectedValue: OFF
-        imageTex: {fileID: 0}
-      - text: Switch DCU POWER to BATT, then continue to next step
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-      - text: 'Switch UIA POWER EV-1 to ON '
-        type: 
-        warning: 
-        image: 
-        varName: emu1
-        expectedValue: ON
-        imageTex: {fileID: 0}
-      - text: Procedure complete! You are now ready for EVA.
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-  - procedure_title: Emergency Procedure Fan
-    emergency: 1
-    num_steps: 1
-    Tasks:
-    - Title: 'EMERGENCY: Turn on Secondary Fan'
-      SubTasks:
-      - text: 'Flip fan switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-  - procedure_title: Emergency Procedure O2
-    emergency: 1
-    num_steps: 1
-    Tasks:
-    - Title: 'EMERGENCY: O2 '
-      SubTasks:
-      - text: 'Flip O2 switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-  - procedure_title: Emergency Procedure Temperature
-    emergency: 1
-    num_steps: 1
-    Tasks:
-    - Title: 'EMERGENCY: Temperature'
-      SubTasks:
-      - text: 'Flip Aux switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-  - procedure_title: Emergency Procedure Pressure
-    emergency: 1
-    num_steps: 1
-    Tasks:
-    - Title: 'EMERGENCY: Pressure'
-      SubTasks:
-      - text: 'Flip Pump switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-  - procedure_title: Table Procedure
-    emergency: 0
-    num_steps: 5
-    Tasks:
-    - Title: Locate Part E
-      SubTasks:
-      - text: 'Flip Pump switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-    - Title: Pull on knob behind Part E
-      SubTasks:
-      - text: 'Flip Pump switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-    - Title: Rotate table to horizontal position
-      SubTasks:
-      - text: 'Flip Pump switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-    - Title: Move cup to other side of table
-      SubTasks:
-      - text: 'Flip Pump switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
-    - Title: Procedure complete!
-      SubTasks:
-      - text: 'Flip Pump switch on DCU '
-        type: 
-        warning: 
-        image: 
-        varName: 
-        expectedValue: 
-        imageTex: {fileID: 0}
+  allProcedures: []
   images: []
   url: 
 --- !u!1 &386283419
@@ -24135,32 +23889,32 @@ PrefabInstance:
     - target: {fileID: 123610916640454539, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 123610916640454539, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 123610916640454539, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 123610916640454539, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 123610916640454539, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 479
       objectReference: {fileID: 0}
     - target: {fileID: 123610916640454539, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -278.40002
       objectReference: {fileID: 0}
     - target: {fileID: 365515893418553731, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
@@ -24245,32 +23999,32 @@ PrefabInstance:
     - target: {fileID: 1415934180106137849, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1415934180106137849, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1415934180106137849, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 1415934180106137849, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 1415934180106137849, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 685.60004
       objectReference: {fileID: 0}
     - target: {fileID: 1415934180106137849, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -278.40002
       objectReference: {fileID: 0}
     - target: {fileID: 1563974486401447726, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
@@ -24305,62 +24059,62 @@ PrefabInstance:
     - target: {fileID: 2017708954743939657, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2017708954743939657, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2017708954743939657, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 2017708954743939657, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 2017708954743939657, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 65.8
       objectReference: {fileID: 0}
     - target: {fileID: 2017708954743939657, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -278.40002
       objectReference: {fileID: 0}
     - target: {fileID: 2127497394914414590, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2127497394914414590, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2127497394914414590, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 2127497394914414590, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 2127497394914414590, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 272.40002
       objectReference: {fileID: 0}
     - target: {fileID: 2127497394914414590, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -278.40002
       objectReference: {fileID: 0}
     - target: {fileID: 2435188924936029474, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
@@ -24380,7 +24134,7 @@ PrefabInstance:
     - target: {fileID: 2843740773708075274, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2843740773708075378, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
@@ -24450,22 +24204,22 @@ PrefabInstance:
     - target: {fileID: 3084972451882015645, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 3084972451882015645, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 3084972451882015645, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 685.60004
       objectReference: {fileID: 0}
     - target: {fileID: 3084972451882015645, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -72.8
       objectReference: {fileID: 0}
     - target: {fileID: 3493021777859276847, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
@@ -24515,22 +24269,22 @@ PrefabInstance:
     - target: {fileID: 4478513235455518853, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 4478513235455518853, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 4478513235455518853, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 479
       objectReference: {fileID: 0}
     - target: {fileID: 4478513235455518853, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -72.8
       objectReference: {fileID: 0}
     - target: {fileID: 4533173135800171515, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
@@ -24550,52 +24304,52 @@ PrefabInstance:
     - target: {fileID: 4593074533162196363, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 4593074533162196363, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 4593074533162196363, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 272.40002
       objectReference: {fileID: 0}
     - target: {fileID: 4593074533162196363, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -72.8
       objectReference: {fileID: 0}
     - target: {fileID: 4657721086867136008, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4657721086867136008, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4657721086867136008, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 131.6
       objectReference: {fileID: 0}
     - target: {fileID: 4657721086867136008, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 145.6
       objectReference: {fileID: 0}
     - target: {fileID: 4657721086867136008, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 65.8
       objectReference: {fileID: 0}
     - target: {fileID: 4657721086867136008, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -72.8
       objectReference: {fileID: 0}
     - target: {fileID: 4933655743014902495, guid: 88192a1ad3c0fb945824e1d52fd988ab,
         type: 3}

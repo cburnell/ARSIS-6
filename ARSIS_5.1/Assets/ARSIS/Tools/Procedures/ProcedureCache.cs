@@ -7,7 +7,7 @@ using TMPro;
 public class ProcedureCache : MonoBehaviour
 {
     public static ProcedureCache Instance { get; private set; }
-    private Dictionary<string, ProcedureEvent> procedureCache;
+    public Dictionary<string, ProcedureEvent> procedureCache;
     private WaitForSeconds procedurePollingDelay = new WaitForSeconds(1.0f);
     public int numberOfProcedures = 0;
     public ProcedureUpdate ProcedureUpdateInstance;

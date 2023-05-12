@@ -77,11 +77,11 @@ public static UIAController S;
             string json = "";
             if (www.isNetworkError)
             {
-                Debug.LogError("NETWORK ERROR Not connected to UIA server :(");
+//                Debug.LogError("NETWORK ERROR Not connected to UIA server :(");
             }
             else if (www.isHttpError)
             {
-                Debug.LogError("HTTP ERROR Not connected to UIA server :( :( :(");
+//                Debug.LogError("HTTP ERROR Not connected to UIA server :( :( :(");
             }
             else
             {
@@ -101,7 +101,7 @@ public static UIAController S;
             }
             else
             {
-                Debug.Log("no data recieved from the server");
+//                Debug.Log("no data recieved from the server");
             }
 
 

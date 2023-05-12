@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ARSISEventSystem;
 using UnityEngine.UI; 
 using System;
 using UnityEngine.Networking;
@@ -32,28 +33,48 @@ public class TaskManager : MonoBehaviour
     // For testing 
     //public GameObject cube; 
 
+    ProcedureCache ProcedureCacheInstance;
     void Start()
     {
         S = this;
-        //add procedure voice commands
-        for (int i = 0; i < allProcedures.Count; i++)
-        {
-            string s = allProcedures[i].procedure_title.Split(':')[0];
-            //VoiceManager.S.addProcedureCommand("Adele " + s + " Procedure", i, 0);
-        }
+        ProcedureCacheInstance = ProcedureCache.Instance;
 
-        //add task voice commands
-        for (int i = 0; i < allProcedures.Count; i++)
-        {
-            for (int j = 0; j < allProcedures[i].Tasks.Length; j++)
-            {
-                string s = allProcedures[i].Tasks[j].Title.Split(':')[0];
-                VoiceManager.S.addProcedureCommand(s, i, j);
+        InvokeRepeating("CheckProcedureCache", 1, 10);
+    }
+
+    public void CheckProcedureCache(){
+        allProcedures.Clear();
+        foreach(KeyValuePair<string, ProcedureEvent> entry in ProcedureCacheInstance.procedureCache){
+            ProcedureEvent pe = entry.Value;
+            Debug.Log(pe.name);
+            int taskCount = pe.taskList.Count;
+            Procedure toAdd = new Procedure(pe.name, false, taskCount);
+            for(int i = 0; i < taskCount; i++){
+                Debug.Log("in i ");
+                ARSISTask at = pe.taskList[i];
+                int stepCount = at.stepList.Count;
+                Task toAddTask = new Task(at.name, stepCount);
+                for(int j = 0; j < stepCount; j++){
+                    Debug.Log("in j");
+                    ARSISEventSystem.Step st = at.stepList[j];
+                    SubTask toAddSt;
+                    if(st.type == "text"){
+                        toAddSt = new SubTask(st.body, st.type, "", null);
+                        toAddTask.addSubTask(j, toAddSt);
+                    }if(st.type == "image"){
+                        byte[]  imageBytes = Convert.FromBase64String(st.body);
+                        Texture2D tex = new Texture2D(2, 2);
+                        tex.LoadImage( imageBytes );
+                        toAddSt = new SubTask("", st.type, "", tex);
+                        toAddTask.addSubTask(j, toAddSt);
+                    }
+                    
+                }
+                toAdd.AddTask(i, toAddTask);
             }
+            allProcedures.Add(toAdd);
         }
-
-        //m_OutputErrorData = FindObjectOfType<OutputErrorData>();
-        //InvokeRepeating("UpdateSystemData", 1, 5);
+        Debug.Log(allProcedures.Count);
     }
 
     private void LateUpdate()
@@ -283,11 +304,13 @@ public class Task
     [Header("Task")]
     public string Title;
     public SubTask[] SubTasks;
+    public int numSubTasks;
     bool complete = false; 
 
     public Task(string title, int numSubTasks)
     {
         this.Title = title;
+        this.numSubTasks = numSubTasks;
         this.SubTasks = new SubTask[numSubTasks]; 
     }
 
